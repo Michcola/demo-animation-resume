@@ -11,20 +11,20 @@ function writeCode(prefix, code, fn){
            window.clearInterval(id)
            fn && fn.call()
          }
-       },0)
+       },70)
     }
 function writeMarkdown(markdown,fn) {
     let domPaper = document.querySelector('#paper>.content')           
     let n = 0 
     let id = setInterval(()=>{
-n += 1
+    n += 1
     domPaper.innerHTML = markdown.substring(0,n)
     domPaper.scrollTop = domPaper.scrollHeight
     if(n >= markdown.length){
     window.clearInterval(id)
     fn && fn.call()
     }
-},10)
+},35)
 }
 
 
@@ -40,12 +40,11 @@ var result = `/*
  }
 
  html{
- background:#rgb(222,222,222);
- font-size:16px;
+ background:#eee;
  }
 
  #code{
- border: 1px solid red;
+ border: 1px solid #aaa;
  padding: 16px;
  }
 
@@ -61,42 +60,35 @@ var result = `/*
      color: #DD4A68;
  }
 
- /* 加点3D效果 */
+ /* 加点 效果 */
 
   #code {
-    transform:rotate(360deg);
+    animation: breath 0.5s infinite alternate-reverse;
   }
   
- /* 不玩了,我来介绍一下我自己吧 */  
+ /* 我来介绍一下我自己吧 */  
  /* 我需要一张白纸 */ 
-#code{
-    position: fixed;
-    left:0;
-    width:50%;
-    height:100%;
-}
-#paper{
-    position: fixed;
-    right:0;
-    width:50%;
-    height:100%;
-    background:black;
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    padding:16px;
-}
+
+ #code-wrapper{
+    width: 50%; 
+    left: 0; 
+    position: fixed; 
+    height: 100%;
+  }
+
+
+
 #paper > .content{
-    background:white;
-    height:100%;
-    width:100%;
+    display:block;
 }
+/* 于是我可以在白纸上鞋子了,请看右边 */
 `
 var result2 = `
 
 
 /*
-* 接下来把Markdown变成HTML - marked.js
+* 用一个优秀的库marked.js
+* 把Markdown变成HTML
 */
 `
 var md =`
@@ -125,15 +117,21 @@ var result3= `
 
 
 /*
-* 接下来把Markdown变成HTML - marked.js
+* 这是我的会动的简历
+* 谢谢观看
 */
 `
 
 writeCode('',result, ()=>{
     createPaper( () =>{
-        writeCode(result,result2)
+        writeMarkdown(md,()=>{
         writeCode(result, result2, ()=>{
-            writeMarkdown(md)
+            convertMarkdownToHtml(()=>{
+                writeCode(result+result2,result3,()=>{
+                    console.log('clear')
+                    })
+                })
+            })
         })
     })
 }) // 定闹钟 :50 毫秒钟后开始写第一行代码
@@ -149,4 +147,13 @@ writeCode('',result, ()=>{
            document.body.appendChild(paper)
            fn.call()
        }
+
+       function convertMarkdownToHtml(fn){
+        var div = document.createElement('div')  
+        div.className = 'html markdown-body'
+        div.innerHTML = marked(md)
+        let markdownContainer = document.querySelector('#paper > .content')
+        markdownContainer.replaceWith(div)
+        fn.call()
+      }
 
