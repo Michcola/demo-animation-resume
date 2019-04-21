@@ -29,7 +29,7 @@ function writeMarkdown(markdown,fn) {
 
 
 var result = `/* 
- * 面试官你好，我是XXX
+ * 面试官你好，我是Mich
  * 只用文字作做我介绍太单调了
  * 我就用代码来介绍吧
  * 首先准备一些样式
@@ -81,7 +81,10 @@ var result = `/*
 #paper > .content{
     display:block;
 }
-/* 于是我可以在白纸上鞋子了,请看右边 */
+
+
+
+/* 于是我可以在白纸上写字了,请看右边 */
 `
 var result2 = `
 
@@ -94,8 +97,8 @@ var result2 = `
 var md =`
 # 自我介绍
 
-我叫XXX
-1996年2月出生
+我叫Mich
+1996年3月出生
 XXX学校毕业
 软件工程专业
 希望应聘前端开发岗位
